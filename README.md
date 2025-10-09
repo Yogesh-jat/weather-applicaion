@@ -7,17 +7,6 @@ A modern weather app built with HTML, CSS, and JavaScript using OpenWeatherMap A
 A modern **Weather Application** built with **HTML, CSS, and JavaScript**, powered by the [OpenWeatherMap API](https://openweathermap.org/api).  
 Search for any city in the world and get **real-time weather details** with a clean, minimal, and responsive UI.  
 
----
-
-## 🔥 Preview
-<p align="center">
-***Desktop***
-  <img src="Screenshot 2025-10-06 200942.png" width="700" alt="Weather App Preview" />
-</p><p
-align="center">
-***Phone***
-  <img src="WhatsApp Image.png" width="400"  alt="Weather App Preview" />
-</p>
 
 ---
 
