@@ -1,0 +1,400 @@
+/* ===================================== */
+/* 1. Global Reset and Base Styles */
+/* ===================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    background-color: #9e9ea8;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main {
+    width: 100%;
+    max-width: 400px; /* Default max width for mobile view */
+    height: 90vh;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    position: relative;
+    background-color: #fff; /* Fallback */
+}
+
+/* Error State */
+main.error {
+    animation: shake 0.5s;
+    border: 2px solid red;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+/* ===================================== */
+/* 2. Form/Search Bar Styles */
+/* ===================================== */
+
+form {
+    display: flex;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.9);
+    position: absolute; 
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+form input {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px 0 0 20px;
+    font-size: 16px;
+    outline: none;
+}
+
+form button {
+    background-color: #5b92e5;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 0 20px 20px 0;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #4a77b8;
+}
+
+/* ===================================== */
+/* 3. Result Section (Mobile-First) */
+/* ===================================== */
+
+.result {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; 
+}
+
+/* Background Image Container */
+#weather-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: background-image 0.5s ease-in-out;
+    filter: brightness(0.85); 
+}
+
+/* Weather Data Box (Semi-transparent card) */
+.weather-data-box {
+    position: relative; 
+    z-index: 5;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.4); 
+    color: white;
+    border-radius: 20px 20px 0 0;
+    backdrop-filter: blur(4px);
+    transition: all 0.9s;
+}
+
+/* City Name and Flag */
+.name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.name figcaption {
+    font-size: 2em;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.name img {
+    border-radius: 50%;
+    border: 2px solid #cbd3d7;
+}
+
+/* Temperature */
+.temperature {
+    margin-bottom: 10px;
+}
+
+#temp-value {
+    font-size: 5em;
+    font-weight: 300;
+    line-height: 1;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+}
+
+.temperature sup {
+    font-size: 0.5em;
+    position: relative;
+    top: -2.5em;
+}
+
+/* Description */
+.description {
+    font-size: 1.4em;
+    font-style: italic;
+    text-transform: capitalize;
+    margin-bottom: 20px;
+    color: #f8f7f5; 
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+/* Details List (Clouds, Humidity, Pressure) */
+.details-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr; 
+    gap: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.details-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 0.96em;
+}
+
+.details-list li span:first-child {
+    text-transform: uppercase;
+    font-size: 0.7em;
+    opacity: 0.8;
+}
+
+.details-list li i {
+    font-size: 1.2em;
+    margin-right: auto; 
+    margin-left: 10px;
+}
+
+/* ===================================== */
+/* 4. NEW: Hourly Forecast Styles */
+/* ===================================== */
+
+.hourly-forecast-wrapper {
+    position: relative;
+    z-index: 6; /* Slightly higher z-index to overlap the data box corner */
+    backdrop-filter: blur(4px); /* Light card background */
+    color: #333;
+    padding: 10px 0 10px 20px;
+    border-radius: 20px 20px 0 0; /* Only round top corners for mobile */
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+    margin-top: -20px; /* Overlap the weather-data-box boundary */
+}
+
+.hourly-forecast-wrapper h3 {
+    font-size: 1em;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #5b92e5;
+}
+
+.hourly-forecast-container {
+    display: flex;
+    overflow-x: scroll; /* Horizontal scrolling for many cards */
+    padding-bottom: 10px; /* Space for scrollbar */
+    padding-right: 20px; /* Space on the right so the last item is not flush */
+    /* Hide scrollbar on Chrome/Safari */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.hourly-forecast-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+.hourly-card {
+    flex: 0 0 auto; /* Prevent cards from growing/shrinking */
+    width: 70px;
+    text-align: center;
+    padding: 5px 10px;
+    border-right: 1px solid #eee;
+}
+
+.hourly-card:last-child {
+    border-right: none;
+}
+
+.hourly-card img {
+    width: 50px;
+    height: 50px;
+    margin: 0;
+}
+
+.hourly-time {
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+.hourly-temp {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+}
+
+
+/* ===================================== */
+/* 5. Desktop UI Overrides (Media Query) */
+/* ===================================== */
+
+@media (min-width: 768px) {
+    body {
+        align-items: center;
+        padding: 50px;
+        background-color: #2c3e50; 
+    }
+
+    main {
+        max-width: 900px; 
+        height: 600px;
+        display: flex; 
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Form on Desktop - Integrated with the data box */
+    main > form {
+        position: absolute;
+        width: 60%; /* Aligns with the data box */
+        left: 40%; 
+        top: 0;
+        border-radius: 0 20px 0 0;
+        background-color: #cbd3d7;
+        padding: 20px 40px;
+    }
+
+    form input {
+        border-radius: 20px 0 0 20px;
+    }
+
+    /* Result Section on Desktop */
+    .result {
+        flex-direction: row;
+        width: 100%;
+        height: 100%;
+    }
+
+    /* Background Image on Desktop (takes up the left half) */
+    #weather-image {
+        position: relative; 
+        width: 40%;
+        height: 100%;
+        border-radius: 20px 0 0 20px;
+        filter: brightness(1.0);
+    }
+
+    /* Weather Data Box on Desktop (takes up the right half) */
+    .weather-data-box {
+        position: relative;
+        flex-grow: 1;
+        width: 60%;
+        height: 100%;
+        background: #cbd3d7; 
+        color: #333; 
+        border-radius: 0 20px 20px 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start; /* Align to top */
+        padding: 40px;
+        padding-top: 100px; /* Push down content below the search bar */
+        backdrop-filter: none;
+        box-shadow: none;
+    }
+    
+    .weather-data-box .name figcaption,
+    .weather-data-box #temp-value,
+    .weather-data-box .description {
+        text-shadow: none;
+    }
+    
+    .weather-data-box .description {
+        color: #5b92e5; 
+    }
+
+    /* Details List on Desktop (Horizontal Grid) */
+    .details-list {
+        grid-template-columns: repeat(3, 1fr); 
+        gap: 20px;
+        border-top: 1px solid #eee;
+        padding-top: 20px;
+        margin-top: 30px;
+        text-align: center;
+    }
+    
+    .details-list li {
+        flex-direction: column; 
+        padding: 0;
+        border-right: 1px solid #eee; 
+    }
+    
+    .details-list li:last-child {
+        border-right: none;
+    }
+
+    .details-list li i {
+        margin: 5px 0;
+        font-size: 1.5em;
+        color: #5b92e5;
+        margin-right: 0; 
+    }
+    
+    .details-list li span:last-child {
+        font-weight: bold;
+        font-size: 1.2em;
+        margin-top: 5px;
+        color: #000;
+    }
+    
+    /* Hourly Forecast on Desktop (Placed below main data) */
+    .hourly-forecast-wrapper {
+        position: absolute;
+        bottom: 0;
+        left: 40%; /* Aligns with the data box */
+        width: 60%;
+        padding: 20px 40px 20px 40px; /* Adjust padding for desktop width */
+        background: #cbd3d7;
+        border-radius: 0 0 20px 0; /* Round bottom right corner */
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        margin-top: 0;
+        border-top: 1px solid #cbd3d7;
+    }
+    
+    .hourly-forecast-container {
+        padding-right: 0; /* Remove right padding to use full width */
+        justify-content: space-between; /* Evenly space cards */
+    }
+    
+    .hourly-card {
+        width: auto; /* Allow width to be determined by content */
+        border-right: none;
+    }
+}
+

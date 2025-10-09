@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Weather App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <form>
+            <input type="text" id="name" autocomplete="off" placeholder="Enter City Name">
+            <button type="submit">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </form>
+
+        <section class="result">
+            
+            <div id="weather-image" class="weather-image"></div>
+
+            <div class="weather-data-box">
+                
+                <figure class="name">
+                    <figcaption>City Name</figcaption> 
+                    <img src=""> 
+                </figure>
+                
+                <figure class="temperature">
+                    <figcaption>
+                        <span id="temp-value">--</span>
+                        <sup>o</sup>
+                    </figcaption> 
+                </figure>
+
+                <p class="description">Loading...</p>
+
+                <ul class="details-list">
+                    <li>
+                        <span>clouds</span>
+                        <i class="fa-solid fa-cloud"></i>
+                        <span id="clouds">--</span>%
+                    </li>
+                    <li>
+                        <span>humidity</span>
+                        <i class="fa-solid fa-droplet"></i>
+                        <span id="humidity">--</span>%
+                    </li>
+                    <li>
+                        <span>pressure</span>
+                        <i class="fa-solid fa-gauge"></i>
+                        <span id="pressure">----</span>hPa
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="hourly-forecast-wrapper">
+                <h3>Hourly Forecast</h3>
+                <div class="hourly-forecast-container" id="hourly-forecast-container">
+                    </div>
+            </div>
+
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
