@@ -7,6 +7,10 @@ A modern weather app built with HTML, CSS, and JavaScript using OpenWeatherMap A
 A modern **Weather Application** built with **HTML, CSS, and JavaScript**, powered by the [OpenWeatherMap API](https://openweathermap.org/api).  
 Search for any city in the world and get **real-time weather details** with a clean, minimal, and responsive UI.  
 
+---
+   ## 🔗 Live Demo  
+Check out the live demo here: [Click to view](https://calm-fox-13271e.netlify.app/)
+
 
 ---
 
